@@ -51,4 +51,14 @@ img = np.fromfunction(np.vectorize(img_gen), (cell_size, cell_size))
 plt.figure(2)
 plt.imshow(img)
 plt.colorbar()
+
+def grad_gen(i, j):
+    return perlin2D_gradient_magnitude(easing5)([a_ll, a_lr, a_ul, a_ur, i / cell_size, j / cell_size])
+
+img = np.fromfunction(np.vectorize(grad_gen), (cell_size, cell_size))
+
+plt.figure(3)
+plt.imshow(img)
+plt.colorbar()
+
 plt.show()

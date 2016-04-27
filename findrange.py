@@ -3,18 +3,19 @@
 import random
 
 from autograd import grad
-from math import pi, radians
+from math import pi, degrees, radians
 from scipy.optimize import minimize
 
 from perlin import *
 
-def perlin2d_gradient_descent(tolerance, easing):
+def perlin2d_gradient_descent(tolerance, fn):
     results = {}
 
-    perlin2D_args = lambda args: perlin2D(easing)(*tuple(args))
-    gradient = grad(perlin2D_args)
+    # optimize.minimize and autograd.grad require a function that
+    # takes in an array of arguments
+    gradient = grad(fn)
 
-    for i in range(100):
+    for i in range(200):
         if i % 20 == 0:
             print "Minimization %d" % i
 
@@ -30,22 +31,31 @@ def perlin2d_gradient_descent(tolerance, easing):
         x0 = [a_ll, a_lr, a_ul, a_ur, x, y]
 
         result = minimize(
-            perlin2D_args,
+            fn,
             x0,
             bounds=((0, 2 * pi), (0, 2 * pi), (0, 2 * pi), (0, 2 * pi), (0, 1), (0, 1)),
             method='L-BFGS-B',
             jac=gradient,
             tol=tolerance)
 
-        key = tuple(round(var, 4) for var in result.x)
+        key = tuple(round(var, 3) for var in result.x)
         if key in results:
             results[key] = min(results[key], result.fun)
         else:
             results[key] = result.fun
 
-    # Print the top 10 best results
-    best = sorted((val, key) for key, val in results.iteritems())
-    for val, key in best[:10]:
-        print val, key
+    # Return the best results
+    return sorted((val, key) for key, val in results.iteritems())
 
-perlin2d_gradient_descent(1e-10, easing5)
+def perlin2d_gradient_ascent(tolerance, fn):
+    best = perlin2d_gradient_descent(tolerance, lambda args: -fn(args))
+    for val, (a_ll, a_lr, a_ul, a_ur, x, y) in best[:10]:
+        print -val, (round(degrees(a_ll), 2),
+                     round(degrees(a_lr), 2),
+                     round(degrees(a_ul), 2),
+                     round(degrees(a_ur), 2),
+                     x, y)
+        print "    also %.3fpi %.3fpi %.3fpi %.3fpi" % (a_ll / pi, a_lr / pi, a_ul / pi, a_ur / pi)
+
+perlin2d_gradient_ascent(1e-10, perlin2D_gradient_magnitude(easing5))
+perlin2d_gradient_ascent(1e-10, lambda args: perlin2D(easing5)(*args))

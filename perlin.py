@@ -1,6 +1,6 @@
 import autograd.numpy as np
 
-import math
+from autograd import grad
 
 cell_size = 100
 
@@ -28,4 +28,12 @@ def perlin2D(easing):
         return lerp(lerp(lower_left, lower_right, x_interp),
                     lerp(upper_left, upper_right, x_interp),
                     y_interp)
+    return f
+
+def perlin2D_gradient_magnitude(easing):
+    # Take the gradient w.r.t to an _array_ of arguments.
+    gradient_function = grad(lambda args: perlin2D(easing)(*args))
+    def f(args):
+        gradient = list(gradient_function(args))
+        return np.sqrt(np.dot(gradient, gradient))
     return f
