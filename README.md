@@ -18,6 +18,26 @@ If you're here, I'm assuming you came from Google looking for these numbers.
 
 If not, the context is that Perlin Noise is a form of [coherent noise](http://libnoise.sourceforge.net/glossary/index.html#coherentnoise) widely used in computer graphics to generate good-looking random patterns. Any implementation won't necessarily generate noise in the range of [-1, 1], but users of random number generators typically expect to be able to specify the range. To have an exact range, you need to know the range of values that the function can produce and apply the right scaling factor.
 
+# Usage
+
+This script requires the packages `scipy`, `numpy`, `matplotlib` and `autograd`.
+
+To find the maximum values of Perlin Noise, use `./findrange.py`.
+
+To plot some 2D Perlin Noise functions and the gradient magnitude (for debugging), use `./plotperlin.py`.
+
+![3x3 Perlin Noise](/images/perlin1.png)
+
+Sample 2D Perlin Noise and gradient magnitude (3x3 grid)
+
+![Perlin Noise Maximum](/images/perlin2.png)
+
+Unique configuration of 2D Perlin Noise vectors that maximizes the function.
+
+![Perlin Noise Gradient Maximum](/images/perlin3.png)
+
+One possible configuration of 2D Perlin Noise vectors that maximizes the gradient magnitude.
+
 # Technical Details
 
 In 2D, the value of Perlin Noise at any point depends on the coordinate (x, y) and the vectors at each corner of the corresponding grid cell. Generally, the vectors are of unit length, so they can be represented using an angle. All cells are statistically identical, so we only need to find the largest value of Perlin Noise within one cell. That means we optimize a function of 6 variables (angle1, angle2, angle3, angle4, x, y).
@@ -40,9 +60,11 @@ Third, these are many different ways to select the random vectors at the grid ce
 | 3D Perlin  | [-0.866, +0.866]  |
 | 2D Perlin gradient magnitude (3rd order) | [0, +1.807] |
 | 2D Perlin gradient magnitude (5th order) | [0, +2.072] |
-| 3d Perlin gradient magnitude (3rd order) | [0, +2.182] |
-| 3d Perlin gradient magnitude (5th order) | [0, +2.793] |
+| 3D Perlin gradient magnitude (3rd order) | [0, +2.182] |
+| 3D Perlin gradient magnitude (5th order) | [0, +2.793] |
 
 (Those numbers are rounded, you might want to increase the last digit in your application.)
+
+Note that Perlin Noise is symmetric around 0 so the maximum value corresponds is the same as the minimum value.
 
 For more details, see [results](results.md).
