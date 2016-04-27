@@ -2,7 +2,7 @@
 
 import random
 
-from ad import adnumber, gh
+from autograd import grad
 from math import pi, radians
 from scipy.optimize import minimize
 
@@ -12,7 +12,7 @@ def perlin2d_gradient_descent(tolerance, easing):
     results = {}
 
     perlin2D_args = lambda args: perlin2D(easing)(*tuple(args))
-    gradient, hessian = gh(perlin2D_args)
+    gradient = grad(perlin2D_args)
 
     for i in range(100):
         if i % 20 == 0:

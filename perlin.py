@@ -1,5 +1,6 @@
-import ad.admath as am
-import numpy as np
+import autograd.numpy as np
+
+import math
 
 cell_size = 100
 
@@ -13,7 +14,7 @@ def easing5(t):
     return 6 * t5 - 15 * t4 + 10 * t3
 
 def unit_vector(angle):
-    return (am.cos(angle), am.sin(angle))
+    return (np.cos(angle), np.sin(angle))
 
 def perlin2D(easing):
     def f(angle_lower_left, angle_lower_right,
