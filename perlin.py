@@ -7,6 +7,11 @@ cell_size = 100
 def lerp(a, b, t):
     return a * (1.0 - t) + b * t
 
+def easing3(t):
+    t2 = t * t
+    t3 = t2 * t
+    return 3 * t2 - 2 * t3
+
 def easing5(t):
     t3 = t * t * t
     t4 = t3 * t
