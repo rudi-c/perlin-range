@@ -5,14 +5,17 @@ from autograd import grad
 cell_size = 100
 
 def lerp(a, b, t):
+    """Linear interpolation of a and b with t"""
     return a * (1.0 - t) + b * t
 
 def easing3(t):
+    """Original easing (interpolation) function for Perlin Noise"""
     t2 = t * t
     t3 = t2 * t
     return 3 * t2 - 2 * t3
 
 def easing5(t):
+    """Improved easing (interpolation) function for Perlin Noise"""
     t3 = t * t * t
     t4 = t3 * t
     t5 = t4 * t
