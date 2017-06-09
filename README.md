@@ -10,7 +10,7 @@ This respository contains a script to:
 
 4) Find the largest value of the magnitude of the gradient of 3D Perlin Noise.
 
-The key techniques used are [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent) and [automatic differentiation](https://en.wikipedia.org/wiki/Automatic_differentiation). **Gradient descent** just means "keep going up the hill until you can't go up the hill anymore". Perlin noise is made of many hills though, so hill-climbing is done multiple times, starting at random points. However, hill-climbing works best if the "up" direction of the hill is known. This is determined using the gradient (derivative) of Perlin Noise. This can be worked out analytically, but it's cool to use **automatic differentiation** which calculates the derivative of *any* function with respect to its arguments. Even if it contains branches, loops and function calls!
+The key techniques used are [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent) and [automatic differentiation](https://en.wikipedia.org/wiki/Automatic_differentiation). **Gradient descent** (or ascent) just means "keep going up the hill until you can't go up the hill anymore". Perlin noise is made of many hills though, so hill-climbing is done multiple times, starting at random points. However, hill-climbing works best if the "up" direction of the hill is known. This is determined using the gradient (derivative) of Perlin Noise. This can be worked out analytically, but it's cool to use **automatic differentiation** which calculates the derivative of *any* function with respect to its arguments. Even if it contains branches, loops and function calls!
 
 # Purpose
 
