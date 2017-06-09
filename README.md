@@ -16,7 +16,7 @@ The key techniques used are [gradient descent](https://en.wikipedia.org/wiki/Gra
 
 If you're here, I'm assuming you came from Google looking for these numbers.
 
-If not, the context is that Perlin Noise is a form of [coherent noise](http://libnoise.sourceforge.net/glossary/index.html#coherentnoise) widely used in computer graphics to generate good-looking random patterns. Any implementation won't necessarily generate noise in the range of [-1, 1], but users of random number generators typically expect to be able to specify the range. To have an exact range, you need to know the range of values that the function can produce and apply the right scaling factor.
+If not, the context is that Perlin Noise is a form of [coherent noise](http://libnoise.sourceforge.net/glossary/index.html#coherentnoise) widely used in computer graphics to generate good-looking random patterns. Not all implementations will necessarily generate noise in the range of [-1, 1], but users of random number generators typically expect to be able to specify the range. To have an exact range, you need to know the range of values that the function can produce and apply the right scaling factor.
 
 # Usage
 
@@ -42,7 +42,7 @@ One possible configuration of 2D Perlin Noise vectors that maximizes the gradien
 
 In 2D, the value of Perlin Noise at any point depends on the coordinate (x, y) and the vectors at each corner of the corresponding grid cell. Generally, the vectors are of unit length, so they can be represented using an angle. All cells are statistically identical, so we only need to find the largest value of Perlin Noise within one cell. That means we optimize a function of 6 variables (angle1, angle2, angle3, angle4, x, y).
 
-In 3D, the mechanism is the same, but now the cell is a cube with 8 corners and each angle needs to be represented with 2 angles. That means we optimize a function of 19 variables (x, y, z) and 2 * 8 angles.
+In 3D, the mechanism is the same, but now the cell is a cube with 8 corners and the vector at each corner needs to be represented with 2 angles. That means we optimize a function of 19 variables: (x, y, z) and 2 * 8 angles.
 
 To complicate matters, Perlin Noise can refer to a few different implementations.
 
@@ -65,6 +65,6 @@ Third, these are many different ways to select the random vectors at the grid ce
 
 (Those numbers are rounded, you might want to increase the last digit in your application.)
 
-Note that Perlin Noise is symmetric around 0 so the maximum value corresponds is the same as the minimum value.
+Note that Perlin Noise is symmetric around 0 so the maximum value is the same as the minimum value.
 
 For more details, see [results](results.md).
