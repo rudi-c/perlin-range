@@ -99,7 +99,9 @@ def perlin3D_sample(angle_iterations, pos_iterations, fn):
     return results
 
 def plot_distribution(results, bin_count, histogram_range):
-    print np.percentile(results, [0, 5, 10, 20, 50, 80, 90, 95, 100])
+    percentiles = [0, 5, 10, 20, 50, 80, 90, 95, 100]
+    for (percentile, value) in zip(percentiles, np.percentile(results, percentiles)):
+        print "Percentile %d: %f" % (percentile, value)
     plt.hist(results, bins=bin_count, range=histogram_range, normed=True, cumulative=True)
     plt.show()
 
