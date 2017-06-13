@@ -1,8 +1,19 @@
 import autograd.numpy as np
 
+import math
+import random
+
 from autograd import grad
+from math import pi
 
 cell_size = 100
+
+def sphere_random():
+    """Return a theta and psi representing a vector uniformly distributed on a
+    unit sphere."""
+
+    # http://mathworld.wolfram.com/SpherePointPicking.html
+    return (random.uniform(0, 2 * pi), math.acos(random.uniform(-1, 1)))
 
 def lerp(a, b, t):
     """Linear interpolation of a and b with t"""
@@ -27,7 +38,7 @@ def unit_vector(angle):
 def unit_vector3d(theta, psi):
     return (np.cos(theta) * np.sin(psi), np.sin(theta) * np.sin(psi), np.cos(psi))
 
-def perlin2D(easing):
+def perlin2D(easing, improved = False):
     def f(angle_lower_left, angle_lower_right,
           angle_upper_left, angle_upper_right, x, y):
         x_interp = easing(x)
@@ -36,12 +47,17 @@ def perlin2D(easing):
         lower_right = np.dot(unit_vector(angle_lower_right), [x - 1.0, y])
         upper_left = np.dot(unit_vector(angle_upper_left), [x, y - 1.0])
         upper_right = np.dot(unit_vector(angle_upper_right), [x - 1.0, y - 1.0])
-        return lerp(lerp(lower_left, lower_right, x_interp),
+        v = lerp(lerp(lower_left, lower_right, x_interp),
                     lerp(upper_left, upper_right, x_interp),
                     y_interp)
+        if improved:
+            m = 0.708
+            return v * v * v / 2 / m / m + v / 2
+        else:
+            return v;
     return f
 
-def perlin3D(easing):
+def perlin3D(easing, improved = False):
     def f(theta_bottom_lower_left,  psi_bottom_lower_left,
           theta_bottom_lower_right, psi_bottom_lower_right,
           theta_bottom_upper_left,  psi_bottom_upper_left,
@@ -70,13 +86,18 @@ def perlin3D(easing):
             unit_vector3d(theta_top_upper_left, psi_top_upper_left), [x, y - 1.0, 1.0 - z])
         top_upper_right = np.dot(
             unit_vector3d(theta_top_upper_right, psi_top_upper_right), [x - 1.0, y - 1.0, 1.0 - z])
-        return lerp(lerp(lerp(bottom_lower_left, bottom_lower_right, x_interp),
+        v = lerp(lerp(lerp(bottom_lower_left, bottom_lower_right, x_interp),
                          lerp(bottom_upper_left, bottom_upper_right, x_interp),
                          y_interp),
                     lerp(lerp(top_lower_left, top_lower_right, x_interp),
                          lerp(top_upper_left, top_upper_right, x_interp),
                          y_interp),
                     z_interp)
+        if improved:
+            m = 0.867
+            return v * v * v / 2 / m / m + v / 2
+        else:
+            return v;
 
     return f
 
@@ -88,8 +109,8 @@ def gradient_magnitude(fn):
         return np.sqrt(np.dot(gradient, gradient))
     return f
 
-def perlin2D_gradient_magnitude(easing):
-    return gradient_magnitude(perlin2D(easing))
+def perlin2D_gradient_magnitude(easing, improved = False):
+    return gradient_magnitude(perlin2D(easing, improved))
 
-def perlin3D_gradient_magnitude(easing):
-    return gradient_magnitude(perlin3D(easing))
+def perlin3D_gradient_magnitude(easing, improved = False):
+    return gradient_magnitude(perlin3D(easing, improved))

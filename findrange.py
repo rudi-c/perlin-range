@@ -10,13 +10,6 @@ from scipy.optimize import minimize
 
 from perlin import *
 
-def sphere_random():
-    """Return a theta and psi representing a vector uniformly distributed on a
-    unit sphere."""
-
-    # http://mathworld.wolfram.com/SpherePointPicking.html
-    return (random.uniform(0, 2 * pi), math.acos(random.uniform(-1, 1)))
-
 def sort_gradient_results(results, digits=3):
     """Given a list of optimize.result objects, group the similar ones
     together (i.e. ended at the same local maximum/minimum), and sort
