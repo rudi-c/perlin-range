@@ -214,3 +214,55 @@ Value 2.778827 at position (0.497, 0.508, 0.503)
       with angles [26.24, 48.47, 152.35, 48.47, 156.25, 133.67, 359.99, 134.87]
       equivalently [0.139, 0.265, 0.852, 0.266, 0.861, 0.734, 0.127, 0.73]pi
 ```
+
+# Maximize 'improved' 2D Perlin Noise's Gradient Magnitude with 5th order interpolant
+
+```
+Value 5.181839 at position (0.5, 0.5)
+      with angles [245.51, 114.48, 114.48, 245.51]
+      equivalently [1.364, 0.636, 0.636, 1.364]pi
+Value 5.181839 at position (0.5, 0.5)
+      with angles [245.57, 114.48, 114.48, 245.51]
+      equivalently [1.364, 0.636, 0.636, 1.364]pi
+Value 5.181839 at position (0.5, 0.5)
+      with angles [245.57, 114.48, 114.48, 245.57]
+      equivalently [1.364, 0.636, 0.636, 1.364]pi
+Value 5.181839 at position (0.5, 0.5)
+      with angles [245.51, 114.42, 114.48, 245.57]
+      equivalently [1.364, 0.636, 0.636, 1.364]pi
+Value 5.181838 at position (0.5, 0.5)
+      with angles [245.51, 114.42, 114.53, 245.57]
+      equivalently [1.364, 0.636, 0.636, 1.364]pi
+Value 5.181837 at position (0.5, 0.5)
+      with angles [245.63, 114.53, 114.36, 245.46]
+      equivalently [1.365, 0.636, 0.635, 1.364]pi
+Value 5.181606 at position (0.499, 0.5)
+      with angles [66.69, 294.84, 293.81, 64.92]
+      equivalently [0.371, 1.638, 1.632, 0.361]pi
+Value 5.181171 at position (0.502, 0.501)
+      with angles [243.97, 114.42, 115.22, 247.06]
+      equivalently [1.355, 0.636, 0.64, 1.373]pi
+```
+
+# Maximize 'improved' 3D Perlin Noise's Gradient Magnitude with 5th order interpolant
+
+```
+Value 6.983123 at position (0.502, 0.5, 0.5)
+      with angles [224.6, 107.89, 313.69, 107.66, 135.1, 108.58, 44.29, 109.38]
+      equivalently [0.252, 0.406, 0.747, 0.399, 1.75, 0.397, 1.255, 0.391]pi
+Value 6.982844 at position (0.5, 0.5, 0.5)
+      with angles [204.89, 132.24, 335.24, 132.24, 335.12, 47.78, 205.0, 47.84]
+      equivalently [1.138, 0.735, 1.862, 0.735, 1.862, 0.265, 1.138, 0.265]pi
+Value 6.982718 at position (0.5, 0.5, 0.499)
+      with angles [25.21, 47.84, 155.9, 47.67, 155.21, 131.89, 25.27, 131.95]
+      equivalently [0.137, 0.264, 0.861, 0.266, 0.862, 0.736, 0.138, 0.733]pi
+Value 6.982649 at position (0.5, 0.5, 0.5)
+      with angles [23.78, 48.36, 154.87, 47.61, 155.56, 132.07, 24.87, 132.18]
+      equivalently [0.141, 0.265, 0.859, 0.266, 0.862, 0.734, 0.137, 0.736]pi
+Value 6.946950 at position (0.503, 0.507, 0.496)
+      with angles [206.44, 132.24, 335.01, 132.18, 337.13, 48.53, 205.29, 47.9]
+      equivalently [1.153, 0.731, 1.854, 0.731, 0.0, 0.251, 1.133, 0.257]pi
+Value 6.946931 at position (0.496, 0.506, 0.504)
+      with angles [26.13, 48.36, 152.69, 48.47, 156.07, 133.67, 359.99, 134.82]
+      equivalently [0.137, 0.267, 0.853, 0.266, 0.86, 0.734, 0.127, 0.73]pi
+```

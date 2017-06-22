@@ -171,3 +171,8 @@ print ">>> Maximize 3D Perlin Noise's Gradient Magnitude with 3rd order interpol
 perlin3d_gradient_ascent_best(1e-10, 200, perlin3D_gradient_magnitude(easing3))
 print ">>> Maximize 3D Perlin Noise's Gradient Magnitude with 5th order interpolant"
 perlin3d_gradient_ascent_best(1e-10, 200, perlin3D_gradient_magnitude(easing5))
+
+print ">>> Maximize 'improved' 2D Perlin Noise's Gradient Magnitude with 5th order interpolant"
+perlin2d_gradient_ascent_best(1e-10, 100, perlin2D_gradient_magnitude(easing5, True))
+print ">>> Maximize 'improved' 3D Perlin Noise's Gradient Magnitude with 5th order interpolant"
+perlin3d_gradient_ascent_best(1e-10, 200, perlin3D_gradient_magnitude(easing5, True))
