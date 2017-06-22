@@ -6,7 +6,7 @@ import random
 from autograd import grad
 from math import pi
 
-cell_size = 100
+cell_size = 480
 
 def sphere_random():
     """Return a theta and psi representing a vector uniformly distributed on a
@@ -32,6 +32,17 @@ def easing5(t):
     t5 = t4 * t
     return 6 * t5 - 15 * t4 + 10 * t3
 
+def smooth_clamp(x, x1, x2, q, p):
+    if x < 0:
+        return -smooth_clamp(-x, x1, x2, q, p)
+    a = (q * p - x1) / x2 / x2
+    n = - (2 * a * x1 + 1) * (x2 - x1) / (q * p - p)
+    d = (q * p - p) / pow(x2 - x1, n)
+    if x < x1:
+        return a * x * x + x
+    else:
+        return d * pow(x2 - x, n) + p
+
 def unit_vector(angle):
     return (np.cos(angle), np.sin(angle))
 
@@ -51,8 +62,7 @@ def perlin2D(easing, improved = False):
                     lerp(upper_left, upper_right, x_interp),
                     y_interp)
         if improved:
-            m = 0.708
-            return v * v * v / 2 / m / m + v / 2
+            return smooth_clamp(v, 0.35, 0.707, 0.85, 0.4) / 0.4;
         else:
             return v;
     return f
@@ -94,8 +104,7 @@ def perlin3D(easing, improved = False):
                          y_interp),
                     z_interp)
         if improved:
-            m = 0.867
-            return v * v * v / 2 / m / m + v / 2
+            return smooth_clamp(v, 0.32, 0.867, 0.85, 0.4) / 0.4;
         else:
             return v;
 

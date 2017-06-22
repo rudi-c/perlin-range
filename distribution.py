@@ -25,7 +25,7 @@ def uniform3_sample(iterations, fn):
     return results
 
 def sin_noise(x, y, z):
-    return 0.03 * np.sin(x * 50.0) * np.sin(y * 50.0) * np.sin(z * 50.0)
+    return np.sin(x * 50.0) * np.sin(y * 50.0) * np.sin(z * 50.0) / 50.0
 
 sin_noise_grad = gradient_magnitude(sin_noise)
 
@@ -98,10 +98,30 @@ def perlin3D_sample(angle_iterations, pos_iterations, fn):
 
     return results
 
+def gaussian(x, mu, sig):
+    return 1./(np.sqrt(2.*pi)*sig)*np.exp(-np.power((x - mu)/sig, 2.)/2)
+
+def plot_gaussian(fig, mean, std, plot_range):
+    start, stop = plot_range
+    x = np.linspace(start, stop, 200)
+    y = gaussian(x, mean, std)
+    plt.plot(x, y)
+
 def plot_distribution(results, bin_count, histogram_range):
-    percentiles = [0, 5, 10, 20, 50, 80, 90, 95, 100]
+    percentiles = [0, 2, 5, 10, 20, 50, 80, 90, 95, 98, 100]
     for (percentile, value) in zip(percentiles, np.percentile(results, percentiles)):
         print "Percentile %d: %f" % (percentile, value)
+    mean = np.mean(results)
+    std = np.std(results)
+    print "Mean: %f" % mean
+    print "Standard deviation: %f" % std
+    fig = plt.figure(1, figsize=(15,6))
+    fig.add_subplot(1, 2, 1)
+    plt.hist(results, bins=bin_count, range=histogram_range, normed=True)
+
+    plot_gaussian(fig, mean, std, histogram_range)
+
+    fig.add_subplot(1, 2, 2)
     plt.hist(results, bins=bin_count, range=histogram_range, normed=True, cumulative=True)
     plt.show()
 
@@ -115,35 +135,35 @@ def perlin2D_and_gradient(easing):
     return f
 
 print ">>> Sin noise distribution"
-results = uniform3_sample(10000, lambda args: sin_noise(*args))
-plot_distribution(results, 100, (-0.03, 0.03))
+results = uniform3_sample(100000, lambda args: sin_noise(*args))
+plot_distribution(results, 100, (-0.02, 0.02))
 
 print ">>> Sin noise gradient distribution"
-results = uniform3_sample(10000, sin_noise_grad)
+results = uniform3_sample(100000, sin_noise_grad)
 plot_distribution(results, 100, (0, 1.0))
 
 print ">>> Perlin 2D distribution"
-results = perlin2D_sample(1000, 100, lambda args: perlin2D(easing5)(*args))
+results = perlin2D_sample(2000, 100, lambda args: perlin2D(easing5)(*args))
 plot_distribution(results, 100, (-0.75, 0.75))
 
 print ">>> Perlin 2D gradient distribution"
-results = perlin2D_sample(1000, 100, perlin2D_gradient_magnitude(easing5))
+results = perlin2D_sample(2000, 100, perlin2D_gradient_magnitude(easing5))
 plot_distribution(results, 100, (0, 2.2))
 
 print ">>> Perlin 3D distribution"
-results = perlin3D_sample(1000, 100, lambda args: perlin3D(easing5)(*args))
+results = perlin3D_sample(2000, 100, lambda args: perlin3D(easing5)(*args))
 plot_distribution(results, 100, (-0.90, 0.90))
 
 print ">>> Perlin 3D gradient distribution"
-results = perlin3D_sample(1000, 100, perlin3D_gradient_magnitude(easing5))
+results = perlin3D_sample(2000, 100, perlin3D_gradient_magnitude(easing5))
 plot_distribution(results, 100, (0, 2.8))
 
 print ">>> Improved Perlin 2D gradient distribution"
-results = perlin3D_sample(1000, 100, perlin2D_gradient_magnitude(easing5, True))
+results = perlin2D_sample(2000, 100, perlin2D_gradient_magnitude(easing5, True))
 plot_distribution(results, 100, (0, 2.8))
 
 print ">>> Improved Perlin 3D gradient distribution"
-results = perlin3D_sample(1000, 100, perlin3D_gradient_magnitude(easing5, True))
+results = perlin3D_sample(2000, 100, perlin3D_gradient_magnitude(easing5, True))
 plot_distribution(results, 100, (0, 2.8))
 
 print ">>> Value v.s. gradient"

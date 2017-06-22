@@ -8,7 +8,7 @@ from math import pi, radians
 from perlin import *
 
 def perlin3x3(fn):
-    grid_size = 3
+    grid_size = 6
     cell_size3x3 = cell_size / grid_size
     rows = []
     for grid_i in range(grid_size):
@@ -56,20 +56,35 @@ def plot_perlin_2d(fig, easing, a_ll, a_lr, a_ul, a_ur):
 
 fig = plt.figure(1, figsize=(15,6))
 fig.add_subplot(1, 2, 1)
-plt.imshow(perlin3x3(perlin2D(easing5)), cmap='Greys')
+plt.imshow(perlin3x3(perlin2D(easing5, True)), cmap='Greys', vmin = -1, vmax = 1)
+plt.colorbar()
+
+fig.add_subplot(1, 2, 2)
+plt.imshow(perlin3x3(lambda *args: perlin2D_gradient_magnitude(easing5, True)(args)))
+plt.colorbar()
+
+fig = plt.figure(2, figsize=(15,6))
+fig.add_subplot(1, 2, 1)
+plt.imshow(perlin3x3(perlin2D(easing5)), cmap='Greys', vmin = -.707, vmax = 0.707)
 plt.colorbar()
 
 fig.add_subplot(1, 2, 2)
 plt.imshow(perlin3x3(lambda *args: perlin2D_gradient_magnitude(easing5)(args)))
 plt.colorbar()
 
-fig = plt.figure(2, figsize=(15,6))
-plot_perlin_2d(fig, easing5, pi / 4, 3 * pi / 4, - pi / 4, - 3 * pi / 4)
+plt.show()
 
 fig = plt.figure(3, figsize=(15,6))
-plot_perlin_2d(fig, easing3, radians(141.98), radians(345.72), radians(274.1), radians(60.79))
+plot_perlin_2d(fig, easing5, pi / 4, 3 * pi / 4, - pi / 4, - 3 * pi / 4)
+
+plt.show()
 
 fig = plt.figure(4, figsize=(15,6))
+plot_perlin_2d(fig, easing3, radians(141.98), radians(345.72), radians(274.1), radians(60.79))
+
+plt.show()
+
+fig = plt.figure(5, figsize=(15,6))
 plot_perlin_2d(fig, easing5, radians(245.51), radians(114.48), radians(114.48), radians(245.51))
 
 plt.show()
