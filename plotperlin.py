@@ -63,6 +63,8 @@ fig.add_subplot(1, 2, 2)
 plt.imshow(perlin3x3(lambda *args: perlin2D_gradient_magnitude(easing5, True)(args)))
 plt.colorbar()
 
+plt.show()
+
 fig = plt.figure(2, figsize=(15,6))
 fig.add_subplot(1, 2, 1)
 plt.imshow(perlin3x3(perlin2D(easing5)), cmap='Greys', vmin = -.707, vmax = 0.707)

@@ -119,7 +119,7 @@ def plot_distribution(results, bin_count, histogram_range):
     fig.add_subplot(1, 2, 1)
     plt.hist(results, bins=bin_count, range=histogram_range, normed=True)
 
-    plot_gaussian(fig, mean, std, histogram_range)
+    # plot_gaussian(fig, mean, std, histogram_range)
 
     fig.add_subplot(1, 2, 2)
     plt.hist(results, bins=bin_count, range=histogram_range, normed=True, cumulative=True)
@@ -158,13 +158,21 @@ print ">>> Perlin 3D gradient distribution"
 results = perlin3D_sample(2000, 100, perlin3D_gradient_magnitude(easing5))
 plot_distribution(results, 100, (0, 2.8))
 
+print ">>> Imrpoved Perlin 2D distribution"
+results = perlin2D_sample(2000, 100, lambda args: perlin2D(easing5, True)(*args))
+plot_distribution(results, 100, (-1.05, 1.05))
+
+print ">>> Imrpoved Perlin 3D distribution"
+results = perlin3D_sample(2000, 100, lambda args: perlin3D(easing5, True)(*args))
+plot_distribution(results, 100, (-1.05, 1.05))
+
 print ">>> Improved Perlin 2D gradient distribution"
 results = perlin2D_sample(2000, 100, perlin2D_gradient_magnitude(easing5, True))
-plot_distribution(results, 100, (0, 2.8))
+plot_distribution(results, 100, (0, 3.8))
 
 print ">>> Improved Perlin 3D gradient distribution"
 results = perlin3D_sample(2000, 100, perlin3D_gradient_magnitude(easing5, True))
-plot_distribution(results, 100, (0, 2.8))
+plot_distribution(results, 100, (0, 3.8))
 
 print ">>> Value v.s. gradient"
 results = perlin2D_sample(1000, 20, perlin2D_and_gradient(easing5))

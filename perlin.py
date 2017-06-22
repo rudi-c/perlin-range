@@ -35,7 +35,7 @@ def easing5(t):
 def smooth_clamp(x, x1, x2, q, p):
     if x < 0:
         return -smooth_clamp(-x, x1, x2, q, p)
-    a = (q * p - x1) / x2 / x2
+    a = (q * p - x1) / x1 / x1
     n = - (2 * a * x1 + 1) * (x2 - x1) / (q * p - p)
     d = (q * p - p) / pow(x2 - x1, n)
     if x < x1:
@@ -62,7 +62,7 @@ def perlin2D(easing, improved = False):
                     lerp(upper_left, upper_right, x_interp),
                     y_interp)
         if improved:
-            return smooth_clamp(v, 0.35, 0.707, 0.85, 0.4) / 0.4;
+            return smooth_clamp(v, 0.36, 0.707, 0.80, 0.4) / 0.4;
         else:
             return v;
     return f
@@ -104,7 +104,7 @@ def perlin3D(easing, improved = False):
                          y_interp),
                     z_interp)
         if improved:
-            return smooth_clamp(v, 0.32, 0.867, 0.85, 0.4) / 0.4;
+            return smooth_clamp(v, 0.34, 0.867, 0.80, 0.4) / 0.4;
         else:
             return v;
 
